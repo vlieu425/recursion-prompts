@@ -139,10 +139,16 @@ let exponent = function(base, exp) {
   }
 
   //recursive
-  var result = base * exponent(base, Math.abs(exp)-1)
+  //var result = base * exponent(base, M*ath.abs(exp)-1)
+  if (exp < 0) {
+    var result = base * exponent(base, -exp-1)
+  } else {
+    var result = base * exponent(base, exp-1)
+  }
+
 
   if (exp < 0) {
-    result = 1/result
+    result = 1/resultcd ..
   }
 
   return result
@@ -209,16 +215,82 @@ let palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 let modulo = function(x, y) {
+  if (x < 0) {
+    return modulo(x + y, y);
+  }
+
+
+  let result = x
+  if (y === 0) {
+    return NaN
+  }
+//base case if remaining amount is less than 2nd parameter
+  if (result < y) {
+    return result
+  }
+
+  result = modulo(x - y, y)
+
+  return result
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 let multiply = function(x, y) {
+  let result = x
+
+
+  if (x === 0 || y === 0) {
+    return 0
+  }
+
+  if (y > 0) {
+    result = x + multiply(x, y - 1)
+  }
+  return result
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 let divide = function(x, y) {
+  //base case
+  var result = 0
+
+  if (y === 0) {
+    return NaN
+  }
+
+  if (y === 1) {
+    return x
+  }
+
+  if (x < 0) {
+    if (-x < y) {
+      return x
+    }
+
+    result = -1 + divide(x + y, y)
+    return result
+  }
+
+
+  if (x < 0 && y <0) {
+    if (x > y) {
+      return 0
+    }
+
+    result = 1 + divide(x - y, y)
+  }
+
+
+  if (x < y) {
+    return x
+  } else {
+
+  result = 1 + divide(x - y, y)
+  }
+
+  return result
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
